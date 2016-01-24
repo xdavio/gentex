@@ -1,0 +1,13 @@
+#!/bin/bash
+current=`pwd`
+
+if [$# -eq 0]
+then
+echo "dirname doctitle"
+exit 0
+fi
+
+mkdir current/$1
+cp *.tex new.tex
+cat new.tex | sed -e 's/uniquenessownsmyheart/$2/' > new.tex
+mv new.tex current/$1/document.tex

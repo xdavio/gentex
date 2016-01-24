@@ -1,0 +1,387 @@
+\documentclass[11 pt]{article}
+\usepackage{amssymb,amsmath, amsthm, graphics, subfig, listings}
+%\usepackage{natbib}
+%formatting that is good for editing (it double spaces)
+\renewcommand{\baselinestretch}{1.4}
+\textwidth 6in \textheight 9in \hoffset -0.30in \topmargin -0.45in
+\interfootnotelinepenalty=10000 %keeps footnotes on a single page
+
+%comment out
+%----------------------
+\newcommand{\commentout}[1]{}
+%--------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%PART I. GENERAL COMMANDS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% I. NUMBERING AND ENVIRONMENTS FOR THEOREMS, PROPOSITIONS, LEMMAS, AND EQUATIONS
+
+%A. Actual Theorems
+\newtheorem{ass}{Assumption}
+\newtheorem{prop}{Proposition}
+\newtheorem{fact}{Fact}
+\newtheorem{lem}{Lemma}
+\newtheorem{claim}{Claim}
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+\newtheorem{con}{Conjecture}
+\newtheorem{defn}{Definition} %use \textbf{} to set it off
+\newtheorem{rem}{Remark}
+\newtheorem{ques}{\textcolor{red}{Question}}
+\newtheorem{com}{\textcolor{red}{Comment}}
+\newtheorem{todo}{\textcolor{red}{To Do}}
+
+%B. Special Referencing
+
+%B1. Built in ones
+
+%1. \eqref (equations, in standard package)
+ %%2. in commath:
+%a)\thmref
+%b)\exref (example)
+%c) \defnref
+%d) \lemref
+%e)\propref
+%f)\remref
+%g)\assref
+%h)\colref - corollary
+%also figures, section, appendix
+
+%B2. I try to define
+%1. fact KEY need dollar signs for it work $\factref{fact:varW}$
+\newcommand{\factref}[1]{ \text{Fact~\ref{#1}} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Bold Greek
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\bbeta{\mbox{\boldmath $\beta$}}
+\def\bmu{\mbox{\boldmath $\mu$}}
+\def\etab{\mbox{\boldmath $\eta$}}
+\def\balpha{\mbox{\boldmath $\alpha$}}
+\def\btau{\mbox{\boldmath $\tau$}}
+\def\bDelta{\mbox{\boldmath $\Delta$}}
+\def\bGamma{\mbox{\boldmath $\Gamma$}}
+\def\bgamma{\mbox{\boldmath $\gamma$}}
+\def\bOmega{\mbox{\boldmath $\Omega$}}
+\def\bPsi{\mbox{\boldmath $U$}}
+\def\bpsi{\mbox{\boldmath $\mu$}}
+\def\bXi{\mbox{\boldmath $\Xi$}}
+\def\bxi{\mbox{\boldmath $\xi$}}
+\def\bSigma{\mbox{\boldmath $\Sigma$}}
+\def\bLambda{\mbox{\boldmath $\Lambda$}}
+\def\btheta{\mbox{\boldmath $\theta$}}
+\def\bDelta{\mbox{\boldmath $\Delta$}}
+\def\bTheta{\mbox{\boldmath $\Theta$}}
+\def\etaz{\mbox{\boldmath $\eta$}}
+
+\def\boldX{\mbox{\boldmath $X$}}
+\def\boldx{\mbox{\boldmath $X$}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% III. SHORTCUTS
+
+%A. Greek symbols
+\newcommand{\be}{\begin{eqnarray*}}
+\newcommand{\ee}{\end{eqnarray*}}
+\newcommand{\ff}{\infty}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\ep}{\epsilon}
+\newcommand{\ga}{\gamma}
+\newcommand{\al}{\alpha}
+\newcommand{\la}{\lambda}
+\newcommand{\si}{\sigma}
+\renewcommand{\th}{\theta}
+\newcommand{\Epos}{E_{\theta|\boldX}}
+\newcommand{\Ej}{E_{\theta,\boldX}}
+%B. Other Math Symbols
+
+%1. transpose, you want a consistent use, bc you could use t,T or \prime
+\def\tran{\mathop{ t }}
+
+%C. Commands
+\newcommand{\xra}[1]{\mathop{ \xrightarrow{#1} }}
+
+%D. Fences puts items in the correct fence sizes (parantheses, brackets, etc..)
+% (get rid of? look at commath package?)
+%fp = fence parentheses
+\newcommand{\fp}[1]{ \mathop{ \left( #1 \right) } }
+%fb = fence brackets
+\newcommand{\fb}[1]{ \mathop{ \left[ #1 \right] } }
+%fbr = fence braces meaning \{
+\newcommand{\fbr}[1]{ \mathop{ \left\{ #1 \right\} } }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%V. Other Commands
+
+ %command that is called by \Title{Text} and this centers it.
+\newcommand{\Title}[1]{\begin{center}{\Large \bf #1} \end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%END PART I
+
+
+\begin{document}
+
+\Title{STAT 609 HM ?}
+\Title{John Davis}
+
+\section*{3.3.5} 
+Let $X_1,...,X_n \sim N(\mu,\sigma^2)$ independently and $l(\sigma^2,d)=(\frac{d}{\sigma^2}-1)^2$.
+
+\subsection*{a} Show that if $\mu$ is known to be $0$, then
+\begin{align*}
+\delta^*(\boldX) &= \frac{1}{n+2}\sum X_i^2
+\end{align*}
+is minimax. Solution: First let $\theta = \sigma^{-2}$ and then calculate $r:=sup_{\theta} R(\theta,\delta^*)$.
+\begin{align*}
+R(\sigma^2,\delta^*) &= E_{\theta} l(\sigma^2,\delta^*) \\
+&= E_{\theta} (\delta^*\sigma^2-1)^2 \\
+&= E_{\theta} (\frac{\sum X_i^2}{\sigma^2(n+2)}-1)^2
+\end{align*}
+Let $T:=\sum^n (X/\sigma)^2$. Since $\mu=0$ and the $X_i$ are independent, $T \sim \chi^2_n$. The last equation becomes
+\begin{align*}
+&= E_{\theta} (\frac{T}{(n+2)}-1)^2 \\
+&= Var(\frac{T}{(n+2)}) + E^2(\frac{T}{(n+2)}-1) \\
+&= \frac{1}{(n+2)^2}Var(T) + (\frac{E(T)}{(n+2)}-1)^2 \\
+&= \frac{2n}{(n+2)^2} + (\frac{n-n-2}{(n+2)})^2 \\
+&= \frac{2n}{(n+2)^2} + (\frac{4}{(n+2)^2}) \\
+\tag{r}\label{ans} &= \frac{2n+4}{(n+2)^2} \\
+&= sup_{\theta} R(\theta,\delta^*) \\
+&< \ff
+\end{align*}
+The last two lines are true becuase the expression doesn't depend on $\theta$ and is finite. This satisfies the first condition of Therem 3.3.3. Moreover, the Bayes risk minimizes the posterior expectation of the loss function, or
+\begin{align*}
+r(\delta|x) &= E(\theta\delta-1)^2 \\
+&= E(\theta^2\delta^2-2\theta\delta + 1) \\
+&= E(\theta^2)\delta^2-2E(\theta)\delta + 1 \\
+\end{align*}
+Minimize w.r.t $\delta$.
+\begin{align*}
+0 &= \frac{d}{d\theta}E_{\theta|X}(\theta^2)\delta^2-2E_{\theta|X}(\theta)\delta + 1 \\
+& \Rightarrow \\
+E_{\theta|X}(\theta) &= E_{\theta|X}(\theta^2)\delta \\
+\tag{1}\label{bayes} \delta_B &= \frac{E_{\theta|X}(\theta)}{E_{\theta|X}(\theta^2)}
+\end{align*}
+The risk under the Bayes' rule is computed next. To carry this out, define Gamma prior with unfixed parameters. That is, let $\theta \sim \Gamma(\al,\beta)$. Next, note that the Bayes' risk requires expectation on the data and $\theta$. Since the Bayes' Rule is a function of the data, its posterior expectation -- and thus the posterior -- must be computed first. 
+\begin{align*}
+p(\theta|\boldx) & \propto p(\boldx|\theta)p(\theta) \\
+&\propto \theta^{n/2}exp\{\frac{-\theta}{2}\sum x_i^2\}\theta^{\alpha-1}exp\{-\beta\theta\} \\
+&\propto \theta^{n/2 + \alpha-1}exp\{\frac{-\theta}{2}\sum x_i^2-\beta\theta\} \\
+&\propto \theta^{n/2 + \alpha-1}exp\{-(\frac{1}{2}\sum x_i^2+\beta)\theta\} \\
+&\Rightarrow \theta|\boldX \sim \Gamma(n/2 + \alpha,\frac{1}{2}\sum x_i^2+\beta)
+\end{align*}
+Now, return to equation~\ref{bayes}.
+\begin{align*}
+\delta_B &= \frac{E_{\theta|X}(\theta)}{E_{\theta|X}(\theta^2)} \\
+&= \frac{n/2 + \alpha}{\frac{1}{2}\sum x_i^2+\beta}\frac{(\frac{1}{2}\sum x_i^2+\beta)^2}{(n/2 + \alpha + 1)(n/2 + \alpha)} \\
+&= \frac{\frac{1}{2}\sum x_i^2+\beta}{(n/2 + \alpha + 1)} \\
+\end{align*}
+Then
+\begin{align*}
+r(\pi,\delta_B) &= E_{\pi,\boldX} (\theta\delta_B-1)^2 \\
+\tag{2}\label{eqn2} &= E_{\pi}E_{\boldX | \theta} (\theta\delta_B-1)^2
+\end{align*}
+Consider just the expectation on the data in Equation~\ref{eqn2}.
+\begin{align*}
+&= E_{\boldX | \theta} (\theta\frac{\frac{1}{2}\sum x_i^2+\beta}{(n/2 + \alpha + 1)}-1)^2  \\
+&= E_{\boldX | \theta} (\frac{\frac{1}{2\sigma^2}\sum x_i^2+\beta\sigma^{-2}}{(n/2 + \alpha + 1)}-1)^2  \\
+&= E_{\boldX | \theta} (\frac{T+2\beta\sigma^{-2}}{(n + 2\alpha + 2)}-1)^2  \\
+&= \frac{1}{(n + 2\alpha + 2)^2}Var(T)+(\frac{ET+2\beta\sigma^{-2}}{(n + 2\alpha + 2)}-1)^2 \\
+&= \frac{2n}{(n + 2\alpha + 2)^2}+(\frac{n+2\beta\sigma^{-2}-n-2\al-2}{(n + 2\alpha + 2)})^2 \\
+&= \frac{2n+(2\beta\sigma^{-2}-2\al-2)^2}{(n + 2\alpha + 2)^2} \\
+&\text{Take E w.r.t. the prior} \\
+E_{\pi}E_{\boldX | \theta} (\theta\delta_B-1)^2 &= \frac{2n+E(2\beta\sigma^{-2}-2\al-2)^2}{(n + 2\alpha + 2)^2} \\
+&\text{Use variance bias decomposition} \\
+&= \frac{2n+4\beta^2 var(\theta)+E^2(2\beta\theta-2\al-2)}{(n + 2\alpha + 2)^2} \\
+&= \frac{2n+4\beta^2 var(\theta)+(2\beta E(\theta)-2\al-2)^2}{(n + 2\alpha + 2)^2} \\
+&= \frac{2n+4\al+(2\al-2\al-2)^2}{(n + 2\alpha + 2)^2} \\
+\tag{3}\label{bayes2} &= \frac{2n+4\al+4}{(n + 2\al + 2)^2}
+\end{align*}
+This is the Bayes' Risk. Consider vanishing sequence of $\al_k|\al_k \rightarrow 0$ as $k \rightarrow \ff$. Taking k large causes equation~\ref{bayes2} to converge to equation~\ref{ans}, i.e.
+\begin{align*}
+k \rightarrow \ff \Rightarrow \frac{2n+4\al_k+4}{(n + 2\alpha_k + 2)^2} & \rightarrow \frac{2n+4}{(n+2)^2} \\
+\end{align*}
+which means that $\delta^*$ is minimax.
+
+\subsection*{b}
+$\mu=0$. Show that 
+\begin{align*}
+\forall \delta_c &\in \left \{ \delta_c := c\sum^nX_i^2 : c \in \mathbb{R} \right \}, \\
+R(\theta^{-1},\delta^*) &\leq R(\theta^{-1},\delta_c)
+\end{align*}
+This is enough to say that $\delta^*$ is uniformly best: the risk function in the previous equation is w.r.t. $X|\theta$; so taking the expectation w.r.t. $\pi$ does not change the inequality.
+
+\begin{align*}
+\forall \delta_c \quad R(\theta^{-1},\delta_c) &= E_{\theta} (c\frac{\sum X_i^2}{\sigma^2} - 1)^2 \\
+&= E_{\theta} (c\frac{\sum X_i^2}{\sigma^2} - 1)^2 \\
+&= E_{\theta} (cT - 1)^2 \\
+&= E_{\theta} (c^2T^2 - 2cT + 1) \\
+&=  c^2E_{\theta}T^2 - 2cE_{\theta}T + 1 \\
+&=  c^2(n)(n+2) - 2cn + 1 \\
+\end{align*}
+noting that $ET^2 = var(T) + E^2T = 2n + n^2 = (n)(n+2)$. Then differentiate w.r.t c, set to zero, and arrive at 
+\begin{align*}
+cn(n+2) = n \\
+c^* = \frac{1}{n+2}
+\end{align*}
+This is the coefficient of $\delta*$ and is the unique minimizer of the defined class of decision rules in this context. We know that the MLE $= \frac{1}{n}\sum X_i^2$ in this case, but $\frac{1}{n} \neq c^* \Rightarrow \exists $ a better decision rule $ \Rightarrow $ MLE is inadmissible.
+
+\subsection*{c} Unfix $\mu$ and define $\delta(\boldX)=\frac{1}{n+1}\sum(X_i-\bar{X})^2$. Consider $\left \{ \delta_c := c\sum^n(X_i-\bar{X})^2 : c \in \mathbb{R} \right \}$. Then compute the risk and minimize the risk with respect to $\boldX | \theta$ again, that is,
+\begin{align*}
+R(\theta^{-1},\delta_c) &= E_{\theta} (c\frac{\sum(X_i-\bar{X})^2}{\sigma^2}-1)^2
+\end{align*}
+Use variance/squared expectation decomposition and recall that the distribution of $T=\frac{\sum(X_i-\bar{X})^2}{\sigma^2}$ is $\chi^2_{n-1}$. I continue in the following:
+\begin{align*}
+&= E_{\theta} (cT-1)^2 \\
+&= var(cT-1) + E^2(cT-1) \\
+&= 2c^2(n-1) + (c(n-1)-1)^2 \\
+&= 2c^2(n-1) + c^2(n-1)^2-2c(n-1)+1 \\
+&= c^2(2(n-1) + (n-1)^2)-2c(n-1)+1 \\
+\frac{d\text{RHS}}{dc} = 0 \Rightarrow 2(n-1) &= 2c(2(n-1) + (n-1)^2) \\
+c &= \frac{n-1}{(n-1)(2 + (n-1))} \\
+&= \frac{1}{2 + (n-1)} \\
+&= \frac{1}{n+1} \\
+\end{align*}
+Thus by the previous logic this decision rule is the best. Because the risk function is a strictly convex quadratic function $\in C^1$, the minimizer is unique and hence $c=1/n$ and $c=1/(n-1)$ produce strictly greater risk on some measureable subset of the parameter space. 
+
+\subsection*{3.3.7} Let $X\sim$ Poisson$(\lambda)$ and $l(\theta,a)=(\lambda-a)^2/\lambda$. Then show that $X$ is minimax. Solution: First I calculate $sup_{\lambda} R(\lambda,X)$.
+\begin{align*}
+R(\lambda,X) &= \frac{1}{\lambda}E_{\lambda} (\lambda-X)^2 \\
+&= \frac{\lambda}{\lambda}
+\end{align*}
+Because this equation is constant, the supremum on $\lambda$ of the risk is constant and finite. Now I minimize the loss function under the posterior risk.
+\begin{align*}
+r(\delta|x) &= E_{\lambda|X} (\lambda -2\delta + \delta^2/\lambda) \\
+&= E\lambda -2\delta + \delta^2E(1/\lambda)
+\end{align*}
+The minimizer is given by
+\begin{align*}
+1 &= \delta E(1/\lambda) \\
+\delta_B &= E^{-1}(1/\lambda) \\
+\end{align*}
+The posterior under a gamma prior with parameters $(1,k^{-1})$ follows:
+\begin{align*}
+p(\lambda|X) & \propto L(\lambda|X=x)p(\lambda) \\
+& \propto \lambda^xe^{-\lambda}e^{-k^{-1}\lambda} \\
+&= \lambda^{x}e^{-(1+k^{-1})\lambda} \\
+& \sim \Gamma(x-1,1+k^{-1})
+\end{align*}
+Computing $\delta_B$ under this prior yields
+\begin{align*}
+\delta_B^{-1} &= E(1/\lambda) \\
+&= \frac{(1+k^{-1})^{x+1}}{\Gamma(x+1)} \int_0^{\ff} \lambda^{x-1} e^{-(1+k^{-1})\lambda} \\
+&= \frac{(1+k^{-1})^{x+1}}{\Gamma(x+1)}\frac{\Gamma(x)}{(1+k^{-1})^{x}} \\
+&= \frac{(1+k^{-1})}{x} \\
+\delta_B &= \frac{x}{(1+k^{-1})} \\
+\end{align*}
+Then compute $r(\pi_k,\delta_B)$ for arbitrary $k \in \mathbb{N}$, giving
+\begin{align*}
+r(\pi_k,\delta_B) &= E r(\pi_k,\delta_B) \\
+r(\pi_k,\delta_B) &= E [\lambda - 2\delta_B + \delta_B^2/\lambda] \\
+&= E [\lambda - 2\delta_B + \delta_B] \\
+&= E [\lambda - \delta_B] \\
+&= \frac{x+1}{1+k^{-1}} - \frac{x}{(1+k^{-1})} \\
+& \Rightarrow \\
+r(\pi_k,\delta_B) &= \frac{1}{1+k^{-1}} \\
+lim_{k \rightarrow \ff} r(\pi_k,\delta_B) &= 1
+\end{align*}
+
+Hence $X$ is minimax.
+
+\section*{3.4.3}
+
+Show that $I_q(\eta) = I_p(h^{-1}(\eta))\frac{1}{(h'(h^{-1}(\eta)))^2}$. Let $h(\theta)=\eta$ s.t. $h$ is monotone increasing and differentiable. Solution: 
+
+\begin{align*}
+LHS &= E \left \{ \frac{d log q(x,\eta)}{d\eta}\right \}^2 \\
+&= E \left \{ \frac{d log q(x,\eta)}{d\theta}\frac{d\theta}{d\eta} \right \}^2 \\
+&= E \left \{ \frac{d log p(x,\theta)}{d\theta}\right \}^2 \left \{ \frac{d\eta}{d\theta} \right \}^{-2} \\
+&= E \left \{ \frac{d log p(x,\theta)}{d\theta}\right \}^2 \left \{ \frac{d h(\theta)}{d\theta} \right \}^{-2} \\
+&= E \left \{ \frac{d log p(x,\theta)}{d\theta}\right \}^2 \left \{ h'(\theta) \right \}^{-2} \\
+&= I_p(h^{-1}(\eta)) \left \{h'(h^{-1}(\eta)) \right \}^{-2}
+\end{align*}
+The fact that $h$ is monotone increasing (strictly) implies it's derivative is strictly positive, keeping the denominator from dividing by zero.
+
+\subsection*{b} Show that $B_q = B_p$.
+
+\begin{align*}
+B_q(h(\theta)) &= \frac{(\Psi'(\eta))^2}{I_q} \\
+&= \frac{(\frac{d\Psi}{d\eta})^2(h'(\theta)^2)}{I_p} \\
+&= \frac{(\frac{d\Psi}{d\eta}\frac{d\eta}{d\theta})^2}{I_p} \\
+&= \frac{(\frac{d\Psi}{d\theta})^2}{I_p} \\
+&= B_p
+\end{align*}
+
+\section*{3.4.5}
+
+Suppose $X_1, ..., X_n \sim N(\mu,\sigma^2)$ independent s.t. $\mu=\mu_0$.
+
+\subsection*{a} Show that $\hat{\sigma}^2_0=n^{-1}\sum (X_i-\mu_0)^2$ is UMVU estimate $\sigma^2$.
+
+First I show that the estimator is unbiased. 
+
+\begin{align*}
+E\hat{\sigma}^2_0&=En^{-1}\sum (X_i-\mu_0)^2 \\
+&= E(X_1-\mu_0)^2 \\
+&= \sigma^2
+\end{align*}
+
+Now show that the variance of the estimator $\hat{\sigma}^2_0$ achieves the information inequality lower bound, $I^{-1}(\sigma^2)$. 
+\begin{align*}
+var(\hat{\sigma}^2_0) &= var(n^{-1}\sum (X_i-\mu_0)^2) \\
+&= \frac{(\sigma^2)^2}{n^2}var(\frac{\sum (X_i-\mu_0)^2}{\sigma^2}) \\
+\end{align*}
+Let $T = \frac{\sum (X_i-\mu_0)^2}{\sigma^2} \sim \chi^2_n$ and continue:
+\begin{align*}
+&= \frac{(\sigma^2)^2}{n^2}var(T) \\
+&= \frac{(\sigma^2)^2}{n^2}2n \\ 
+&= \frac{2(\sigma^2)^2}{n}
+\end{align*}
+Now we have to see if this equals $I^{-1}$.
+\begin{align*}
+I_1(\sigma^2) &= -E[\frac{\partial}{\partial \sigma^2} log p(x,\sigma^2)] \\
+&= -E[\frac{\partial^2}{\partial \sigma^2 \partial \sigma^2}( -\frac{1}{2}log(2\pi\sigma^2) - \frac{1}{2\sigma^2}(X_1 - \mu_0)^2)] \\
+&= -E[ \frac{\partial}{\partial \sigma^2} \frac{1}{2(\sigma^2)}+\frac{1}{2(\sigma^2)^2}(X_1-\mu_0)^2] \\
+&= -E[  \frac{-1}{(\sigma^2)^2}-\frac{1}{(\sigma^2)^3}(X_1-\mu_0)^2] \\
+&= -(\frac{1}{2(\sigma^2)^2}-\frac{1}{(\sigma^2)^2}) \\
+&=\frac{1}{2(\sigma^2)^2} \\
+& \Rightarrow \\
+I^{-1}(\sigma^2) &= \frac{2(\sigma^2)^2}{n} 
+\end{align*}
+
+\subsection*{b}
+
+$\hat{\sigma}_0^2$ is inadmissible under squared error loss. 
+
+\begin{align*}
+R(\sigma^2,\hat{\sigma}_0^2) &= E_{X|\sigma^2} (n^{-1}\sum(X_i-\mu_0)^2-\sigma^2) \\
+&= \sigma^2(\frac{1}{n}T - 1)^2
+\end{align*}
+Since $c^*$ from the previous problem is $= n+2 \neq n$ we can conclude that the estimator is inadmissible.
+
+
+
+%-------------------
+%\section{Question 7}
+%\input{q7}
+%-------------------
+
+%-------------------
+%\section{Question 8}
+%\input{q8}
+%-------------------
+
+%Bibliography
+%----------------------------------------
+%\bibliographystyle{model2-names}
+%\bibliography{MethodBIB}
+%----------------------------------------
+
+
+\end{document}
